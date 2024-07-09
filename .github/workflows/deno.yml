@@ -3,7 +3,7 @@ name: Deploy static content to GitHub Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: 
+    branches:
       - master
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,19 +33,18 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
-        working-directory: ./my-react-app
         run: |
+          cd my-react-app
           npm install --no-save --no-audit --prefer-offline --no-progress --production
 
       - name: Build
-        working-directory: ./my-react-app
         run: |
+          cd my-react-app
           npm run build --if-present
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages # Branch to deploy to, typically gh-pages
-          FOLDER: ./my-react-app/build # Folder to deploy
-
+          BRANCH: gh-pages
+          FOLDER: ./my-react-app/build

@@ -1,53 +1,51 @@
-name: Deploy static content to Pages
+name: Deploy static content to GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ['masters']
+    branches: 
+      - master
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
 concurrency:
   group: 'pages'
   cancel-in-progress: true
+
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up Node
+
+      - name: Set up Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '14' # You can adjust the Node.js version as needed
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-      - name: Install dependencies --no-save --no-audit --prefer-offline --no-progress --production
-        working-directory: ./my-react-app/src
-        run: npm install 
+
+      - name: Install dependencies
+        working-directory: ./my-react-app
+        run: |
+          npm install --no-save --no-audit --prefer-offline --no-progress --production
+
       - name: Build
         working-directory: ./my-react-app
-        run: CI=false npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload dist repository
-          path: './my-app/build'
+        run: |
+          npm run build --if-present
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # Branch to deploy to, typically gh-pages
+          FOLDER: ./my-react-app/build # Folder to deploy
+

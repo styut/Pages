@@ -35,7 +35,7 @@ jobs:
           node-version: 18
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-      - name: Install dependencies
+      - name: Install dependencies --no-save --no-audit --prefer-offline --no-progress --production
         working-directory: ./my-react-app/src
         run: npm install 
       - name: Build

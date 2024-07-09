@@ -34,11 +34,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd my-react-app
+          cd ./my-react-app
           npm install --no-save --no-audit --prefer-offline --no-progress --production
 
       - name: Build
         run: |
+          cd ./my-react-app
           npm run build --if-present
 
       - name: Deploy to GitHub Pages

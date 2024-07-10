@@ -4,7 +4,7 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches:
-      - master
+      - main
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -48,5 +48,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          BRANCH: master  # Specify the branch name here
-          FOLDER: ./build # Specify the deployment folder here
+          BRANCH: gh-pages  # Specify the branch name here
+          FOLDER: ./build   # Specify the deployment folder here

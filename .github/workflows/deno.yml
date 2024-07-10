@@ -49,4 +49,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           BRANCH: master  # Specify the branch name here
-          FOLDER: ./my-react-app/build  # Specify the deployment folder here
+          FOLDER: ./ # Specify the deployment folder here

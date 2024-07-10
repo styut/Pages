@@ -49,4 +49,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           BRANCH: master  # Specify the branch name here
-          FOLDER: ./ # Specify the deployment folder here
+          FOLDER: ./public # Specify the deployment folder here
